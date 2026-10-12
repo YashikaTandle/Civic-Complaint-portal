@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CivicCare | Civic Complaint Portal</title>
+<style>
+:root{--primary:#1457d9;--primary2:#0b3b9e;--bg:#f4f7fb;--text:#172033;--muted:#687386;--white:#fff;--green:#16945a;--orange:#e58a16;--red:#d64545;--border:#e2e7ef}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--text)}
+button,input,select,textarea{font:inherit}.hidden{display:none!important}
+.topbar{height:70px;background:#fff;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 5%;position:sticky;top:0;z-index:20}
+.brand{display:flex;align-items:center;gap:11px;font-weight:800;font-size:21px;color:var(--primary)}.brand-icon{width:40px;height:40px;border-radius:10px;background:var(--primary);color:white;display:grid;place-items:center;font-size:21px}
+.nav{display:flex;gap:8px}.nav button{border:0;background:transparent;padding:10px 13px;color:#4f5c70;border-radius:8px;cursor:pointer}.nav button:hover,.nav button.active{background:#edf3ff;color:var(--primary);font-weight:600}
+.user-pill{display:flex;align-items:center;gap:9px;color:#475267;font-size:14px}.avatar{width:34px;height:34px;border-radius:50%;background:#dbe7ff;color:var(--primary);display:grid;place-items:center;font-weight:700}
+main{max-width:1200px;margin:auto;padding:34px 5% 60px}.hero{background:linear-gradient(120deg,#0f4dcc,#2372ed);color:#fff;border-radius:20px;padding:42px 44px;display:flex;justify-content:space-between;align-items:center;gap:30px;box-shadow:0 14px 35px #174ea921}.hero h1{font-size:36px;margin:0 0 12px}.hero p{max-width:610px;line-height:1.6;color:#e6efff;margin:0 0 23px}.btn{border:0;border-radius:9px;padding:11px 17px;cursor:pointer;font-weight:650}.btn-primary{background:var(--primary);color:#fff}.btn-light{background:#fff;color:var(--primary)}.btn-outline{background:#fff;border:1px solid var(--border);color:#344054}.hero-art{font-size:92px;opacity:.9}
+.section-title{display:flex;align-items:center;justify-content:space-between;margin:30px 0 16px}.section-title h2{font-size:21px;margin:0}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:20px;box-shadow:0 4px 14px #17203309}.stat{font-size:28px;font-weight:800;margin-top:10px}.muted{color:var(--muted);font-size:14px}.icon-box{width:42px;height:42px;border-radius:10px;background:#edf3ff;color:var(--primary);display:grid;place-items:center;font-size:20px}
+.panel{background:#fff;border:1px solid var(--border);border-radius:14px;padding:22px;box-shadow:0 4px 14px #17203308}.table{width:100%;border-collapse:collapse}.table th,.table td{text-align:left;padding:14px 12px;border-bottom:1px solid #edf0f4;font-size:14px}.table th{color:#667085;background:#fafbfc;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+.badge{display:inline-block;padding:5px 9px;border-radius:999px;font-size:12px;font-weight:700}.submitted{background:#edf3ff;color:#2459bd}.review{background:#fff4df;color:#a66708}.progress{background:#eaf2ff;color:#1854b5}.resolved{background:#e7f7ef;color:#137347}.rejected{background:#fdecec;color:#b73535}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}.field label{font-size:13px;font-weight:650;color:#344054}.field input,.field select,.field textarea{border:1px solid #d8dee8;border-radius:8px;padding:11px 12px;outline:none;background:#fff}.field textarea{min-height:120px;resize:vertical}.field input:focus,.field select:focus,.field textarea:focus{border-color:#5b8def;box-shadow:0 0 0 3px #1457d915}
+.page-head{margin-bottom:23px}.page-head h1{margin:0 0 7px;font-size:28px}.page-head p{margin:0;color:var(--muted)}
+.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.quick .card{cursor:pointer;transition:.15s}.quick .card:hover{transform:translateY(-2px);box-shadow:0 9px 20px #17203312}
+.searchbar{display:flex;gap:10px;margin-bottom:15px}.searchbar input{flex:1;border:1px solid var(--border);border-radius:9px;padding:11px 13px}
+.modal{position:fixed;inset:0;background:#11182770;display:grid;place-items:center;padding:20px;z-index:50}.modal-box{background:#fff;width:min(620px,100%);border-radius:15px;padding:24px}.modal-head{display:flex;justify-content:space-between;align-items:center}.close{border:0;background:#f2f4f7;border-radius:8px;width:34px;height:34px;cursor:pointer}
+.timeline{display:flex;justify-content:space-between;position:relative;margin:28px 0 12px}.timeline:before{content:"";height:3px;background:#dfe5ee;position:absolute;top:16px;left:8%;right:8%}.step{position:relative;z-index:1;text-align:center;width:25%;font-size:12px;color:#7a8597}.dot{width:34px;height:34px;border-radius:50%;background:#e7ebf1;margin:auto auto 7px;display:grid;place-items:center;font-weight:800}.step.done{color:var(--primary)}.step.done .dot{background:var(--primary);color:#fff}
+.login-wrap{min-height:calc(100vh - 70px);display:grid;place-items:center}.login{width:min(430px,100%);background:#fff;border:1px solid var(--border);border-radius:16px;padding:30px;box-shadow:0 12px 30px #17203312}.login h1{margin:0 0 8px}.login p{color:var(--muted);margin-top:0}.login .field{margin:15px 0}
+.footer{text-align:center;color:#7b8494;font-size:13px;margin-top:45px}
+@media(max-width:850px){.cards{grid-template-columns:1fr 1fr}.hero{padding:30px}.hero-art{display:none}.nav{display:none}.form-grid,.quick{grid-template-columns:1fr}.table{min-width:720px}.panel{overflow:auto}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><div class="brand-icon">🏛</div>CivicCare</div>
+  <nav class="nav" id="nav">
+    <button onclick="showPage('dashboard')" class="active">Dashboard</button>
+    <button onclick="showPage('submit')">Submit Complaint</button>
+    <button onclick="showPage('complaints')">My Complaints</button>
+    <button onclick="showPage('admin')">Admin</button>
+  </nav>
+  <div class="user-pill"><div class="avatar">YS</div><span>Yashika</span><button class="btn btn-outline" onclick="showPage('login')">Logout</button></div>
+</header>
+
+<main id="app"></main>
+
+<div class="modal hidden" id="modal"><div class="modal-box" id="modalBox"></div></div>
+
+<script>
+const complaints=[
+ {id:"CCP-1048",category:"Road & Potholes",title:"Large pothole near main road",location:"Shivaji Nagar",date:"05 Oct 2026",status:"In Progress",priority:"High"},
+ {id:"CCP-1042",category:"Street Lighting",title:"Street light not working",location:"Kothrud",date:"02 Oct 2026",status:"Under Review",priority:"Medium"},
+ {id:"CCP-1036",category:"Waste Management",title:"Garbage collection delayed",location:"Baner",date:"29 Sep 2026",status:"Resolved",priority:"Medium"},
+ {id:"CCP-1029",category:"Water Supply",title:"Water leakage on public road",location:"Aundh",date:"26 Sep 2026",status:"Submitted",priority:"High"}
+];
+function statusClass(s){return s==="Resolved"?"resolved":s==="Submitted"?"submitted":s==="Under Review"?"review":s==="In Progress"?"progress":"rejected"}
+function showPage(page){
+ document.getElementById('nav').querySelectorAll('button').forEach(b=>b.classList.remove('active'));
+ const map={dashboard:0,submit:1,complaints:2,admin:3}; if(map[page]!=null) document.getElementById('nav').children[map[page]].classList.add('active');
+ const app=document.getElementById('app');
+ if(page==="login"){document.querySelector('.topbar').style.display='none';app.innerHTML=login();return}
+ document.querySelector('.topbar').style.display='flex';
+ if(page==="dashboard") app.innerHTML=dashboard();
+ if(page==="submit") app.innerHTML=submit();
+ if(page==="complaints") app.innerHTML=complaintsPage();
+ if(page==="admin") app.innerHTML=admin();
+}
+function dashboard(){return `
+<section class="hero"><div><h1>Make your city better.</h1><p>Report civic issues, track complaints, and help your local administration create a cleaner, safer and better-connected community.</p><button class="btn btn-light" onclick="showPage('submit')">＋ Report an Issue</button></div><div class="hero-art">🏙️</div></section>
+<div class="section-title"><h2>Your Complaint Overview</h2><span class="muted">Updated just now</span></div>
+<div class="cards">
+ <div class="card"><div class="icon-box">📋</div><div class="stat">12</div><div class="muted">Total Complaints</div></div>
+ <div class="card"><div class="icon-box">🔎</div><div class="stat">3</div><div class="muted">Under Review</div></div>
+ <div class="card"><div class="icon-box">🔧</div><div class="stat">4</div><div class="muted">In Progress</div></div>
+ <div class="card"><div class="icon-box">✓</div><div class="stat">5</div><div class="muted">Resolved</div></div>
+</div>
+<div class="section-title"><h2>Quick Actions</h2></div>
+<div class="quick">
+ <div class="card" onclick="showPage('submit')"><div class="icon-box">📝</div><h3>Submit Complaint</h3><p class="muted">Report a new civic issue with location and details.</p></div>
+ <div class="card" onclick="showPage('complaints')"><div class="icon-box">📍</div><h3>Track Complaint</h3><p class="muted">Check the latest status and progress of your reports.</p></div>
+ <div class="card" onclick="showPage('admin')"><div class="icon-box">📊</div><h3>Administration</h3><p class="muted">View complaint management and performance analytics.</p></div>
+</div>
+<div class="section-title"><h2>Recent Complaints</h2><button class="btn btn-outline" onclick="showPage('complaints')">View All</button></div>
+<div class="panel"><table class="table"><thead><tr><th>ID</th><th>Complaint</th><th>Category</th><th>Date</th><th>Status</th></tr></thead><tbody>${complaints.slice(0,3).map(row).join('')}</tbody></table></div>
+<div class="footer">CivicCare • Civic Complaint Portal Prototype • 2026</div>`}
+function row(c){return `<tr><td><b>${c.id}</b></td><td>${c.title}<br><span class="muted">${c.location}</span></td><td>${c.category}</td><td>${c.date}</td><td><span class="badge ${statusClass(c.status)}">${c.status}</span></td></tr>`}
+function submit(){return `<div class="page-head"><h1>Submit a Complaint</h1><p>Provide accurate information so the concerned department can act quickly.</p></div>
+<div class="panel"><div class="form-grid">
+<div class="field"><label>Complaint Category *</label><select id="cat"><option>Road & Potholes</option><option>Street Lighting</option><option>Waste Management</option><option>Water Supply</option><option>Drainage & Sewage</option><option>Public Safety</option></select></div>
+<div class="field"><label>Priority</label><select id="priority"><option>Medium</option><option>High</option><option>Low</option></select></div>
+<div class="field full"><label>Complaint Title *</label><input id="title" placeholder="e.g. Street light not working near community hall"></div>
+<div class="field full"><label>Location *</label><input id="loc" placeholder="Enter area, street or landmark"></div>
+<div class="field full"><label>Description *</label><textarea id="desc" placeholder="Describe the issue clearly..."></textarea></div>
+<div class="field"><label>Upload Image</label><input type="file" accept="image/*"></div>
+<div class="field"><label>Contact Number</label><input placeholder="+91 XXXXX XXXXX"></div>
+</div><div style="display:flex;justify-content:flex-end;gap:10px;margin-top:22px"><button class="btn btn-outline" onclick="showPage('dashboard')">Cancel</button><button class="btn btn-primary" onclick="submitComplaint()">Submit Complaint</button></div></div>`}
+function submitComplaint(){const title=document.getElementById('title').value||"New civic issue";const cat=document.getElementById('cat').value;const loc=document.getElementById('loc').value||"Not specified";complaints.unshift({id:"CCP-"+(1049+Math.floor(Math.random()*90)),category:cat,title,location:loc,date:"06 Oct 2026",status:"Submitted",priority:document.getElementById('priority').value});alert("Complaint submitted successfully! Your complaint ID has been generated.");showPage('complaints')}
+function complaintsPage(){return `<div class="page-head"><h1>My Complaints</h1><p>Track all complaints submitted through your account.</p></div>
+<div class="searchbar"><input id="search" oninput="filterComplaints()" placeholder="Search by complaint ID, title or category..."><button class="btn btn-primary" onclick="showPage('submit')">＋ New Complaint</button></div>
+<div class="panel"><table class="table"><thead><tr><th>ID</th><th>Complaint</th><th>Category</th><th>Date</th><th>Priority</th><th>Status</th><th></th></tr></thead><tbody id="complaintRows">${complaints.map(c=>`<tr><td><b>${c.id}</b></td><td>${c.title}<br><span class="muted">${c.location}</span></td><td>${c.category}</td><td>${c.date}</td><td>${c.priority}</td><td><span class="badge ${statusClass(c.status)}">${c.status}</span></td><td><button class="btn btn-outline" onclick="viewComplaint('${c.id}')">View</button></td></tr>`).join('')}</tbody></table></div>`}
+function filterComplaints(){const q=document.getElementById('search').value.toLowerCase();document.getElementById('complaintRows').innerHTML=complaints.filter(c=>(c.id+c.title+c.category+c.location).toLowerCase().includes(q)).map(c=>`<tr><td><b>${c.id}</b></td><td>${c.title}<br><span class="muted">${c.location}</span></td><td>${c.category}</td><td>${c.date}</td><td>${c.priority}</td><td><span class="badge ${statusClass(c.status)}">${c.status}</span></td><td><button class="btn btn-outline" onclick="viewComplaint('${c.id}')">View</button></td></tr>`).join('')}
+function viewComplaint(id){const c=complaints.find(x=>x.id===id);document.getElementById('modalBox').innerHTML=`<div class="modal-head"><div><h2 style="margin:0">${c.title}</h2><span class="muted">${c.id} • ${c.category}</span></div><button class="close" onclick="closeModal()">×</button></div><p><b>Location:</b> ${c.location}</p><p><b>Submitted:</b> ${c.date} &nbsp; <b>Priority:</b> ${c.priority}</p><hr style="border:0;border-top:1px solid var(--border)"><h3>Complaint Progress</h3><div class="timeline">${["Submitted","Under Review","In Progress","Resolved"].map((s,i)=>`<div class="step ${["Submitted","Under Review","In Progress","Resolved"].indexOf(c.status)>=i?'done':''}"><div class="dot">${i+1}</div>${s}</div>`).join('')}</div><p class="muted">Current status: <b>${c.status}</b></p>`;document.getElementById('modal').classList.remove('hidden')}
+function closeModal(){document.getElementById('modal').classList.add('hidden')}
+function admin(){return `<div class="page-head"><h1>Administration Dashboard</h1><p>Monitor civic complaints and departmental performance.</p></div>
+<div class="cards"><div class="card"><div class="muted">Total Complaints</div><div class="stat">248</div><span class="muted">↑ 8.4% this month</span></div><div class="card"><div class="muted">Pending Review</div><div class="stat">37</div><span class="muted">Requires attention</span></div><div class="card"><div class="muted">In Progress</div><div class="stat">64</div><span class="muted">Across departments</span></div><div class="card"><div class="muted">Resolved</div><div class="stat">147</div><span class="muted">59.3% resolution rate</span></div></div>
+<div class="section-title"><h2>Complaint Management</h2><select class="btn btn-outline"><option>All Departments</option><option>Roads</option><option>Sanitation</option><option>Water</option><option>Electrical</option></select></div>
+<div class="panel"><table class="table"><thead><tr><th>ID</th><th>Citizen Complaint</th><th>Department</th><th>Priority</th><th>Status</th><th>Action</th></tr></thead><tbody>${complaints.map(c=>`<tr><td><b>${c.id}</b></td><td>${c.title}<br><span class="muted">${c.location}</span></td><td>${c.category.split(" ")[0]}</td><td>${c.priority}</td><td><span class="badge ${statusClass(c.status)}">${c.status}</span></td><td><button class="btn btn-outline" onclick="adminUpdate('${c.id}')">Update</button></td></tr>`).join('')}</tbody></table></div>
+<div class="section-title"><h2>Department Performance</h2></div><div class="cards"><div class="card"><b>Roads & Infrastructure</b><p class="muted">72 complaints</p><div style="height:8px;background:#edf0f4;border-radius:10px"><div style="height:100%;width:78%;background:#1457d9;border-radius:10px"></div></div></div><div class="card"><b>Sanitation</b><p class="muted">58 complaints</p><div style="height:8px;background:#edf0f4;border-radius:10px"><div style="height:100%;width:88%;background:#16945a;border-radius:10px"></div></div></div><div class="card"><b>Water Supply</b><p class="muted">46 complaints</p><div style="height:8px;background:#edf0f4;border-radius:10px"><div style="height:100%;width:66%;background:#e58a16;border-radius:10px"></div></div></div><div class="card"><b>Electrical</b><p class="muted">32 complaints</p><div style="height:8px;background:#edf0f4;border-radius:10px"><div style="height:100%;width:91%;background:#1457d9;border-radius:10px"></div></div></div></div>`}
+function adminUpdate(id){const c=complaints.find(x=>x.id===id);document.getElementById('modalBox').innerHTML=`<div class="modal-head"><h2>Update Complaint</h2><button class="close" onclick="closeModal()">×</button></div><p><b>${c.id}</b> — ${c.title}</p><div class="field"><label>Status</label><select id="newStatus"><option ${c.status==="Submitted"?"selected":""}>Submitted</option><option ${c.status==="Under Review"?"selected":""}>Under Review</option><option ${c.status==="In Progress"?"selected":""}>In Progress</option><option ${c.status==="Resolved"?"selected":""}>Resolved</option></select></div><div class="field" style="margin-top:14px"><label>Admin Remark</label><textarea placeholder="Add an update for the citizen..."></textarea></div><button class="btn btn-primary" style="margin-top:15px" onclick="saveStatus('${id}')">Save Update</button>`;document.getElementById('modal').classList.remove('hidden')}
+function saveStatus(id){const c=complaints.find(x=>x.id===id);c.status=document.getElementById('newStatus').value;closeModal();showPage('admin');alert("Complaint status updated successfully.")}
+function login(){return `<div class="login-wrap"><div class="login"><div class="brand" style="margin-bottom:22px"><div class="brand-icon">🏛</div>CivicCare</div><h1>Welcome back</h1><p>Sign in to access the Civic Complaint Portal.</p><div class="field"><label>Email</label><input value="citizen@example.com"></div><div class="field"><label>Password</label><input type="password" value="password"></div><button class="btn btn-primary" style="width:100%;margin-top:8px" onclick="showPage('dashboard')">Sign In</button><p style="text-align:center;margin-top:18px">Demo prototype • Any credentials accepted</p></div></div>`}
+showPage('dashboard');
+</script>
+</body>
+</html>
